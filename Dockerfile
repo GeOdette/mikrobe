@@ -1,39 +1,14 @@
 FROM 812206152185.dkr.ecr.us-west-2.amazonaws.com/latch-base:02ab-main
 
+# Install conda
+RUN curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
+ENV CONDA_DIR /opt/conda
+RUN bash miniconda.sh -b -p /opt/conda
+ENV PATH=$CONDA_DIR/bin:$PATH
 
-ARG PKGS=" \
-    build-essential \
-    ca-certificates \
-    git \
-    gnupg \
-    libbz2-dev \
-    libcurl4-gnutls-dev \
-    libssl-dev \
-    liblzma-dev \
-    python-is-python3 \
-    python3-pip \
-    tzdata \
-    wget \
-    zlib1g-dev \
-    "
 
-# mccortex
-RUN apt-get install wget
-RUN apt install sudo
-RUN python -m pip install requests
-RUN git clone --recursive -b geno_kmer_count https://github.com/Mykrobe-tools/mccortex mccortex
-RUN cd mccortex
-RUN make
-
-# Clone mykrobe
-RUN git clone https://github.com/Mykrobe-tools/mykrobe.git
-
-RUN cd mykrobe
-RUN pip3 install .
-RUN mykrobe panels update_metadata
-RUN mykrobe panels update_species all
-# install mykrobe
-
+# mykrobe
+RUN conda install -c bioconda mykrobe
 
 
 COPY wf /root/wf
