@@ -1,15 +1,16 @@
 FROM 812206152185.dkr.ecr.us-west-2.amazonaws.com/latch-base:02ab-main
 
-# Install conda
-RUN curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output miniconda.sh
-ENV CONDA_DIR /opt/conda
-RUN bash miniconda.sh -b -p /opt/conda
-ENV PATH=$CONDA_DIR/bin:$PATH
+RUN apt-get update
+RUN apt-get install -y curl
 
+# build from source on a Linux container
+RUN curl -L https://github.com/Mykrobe-tools/mykrobe/archive/refs/tags/v0.11.0.tar.gz -o /root/mykrobe.tar.gz &&\
+  tar -xvf /root/mykrobe.tar.gz &&\
+  cd /root/mykrobe-0.11.0 &&\
+  python3 -m pip install .
 
-# mykrobe
-RUN conda install -c bioconda mykrobe
-
+RUN mykrobe panels update_metadata
+RUN mykrobe panels update_species all
 
 COPY wf /root/wf
 ARG tag
