@@ -17,7 +17,7 @@ def mykrobe_task(species: str, sample_name: str, reads: LatchFile, output_name: 
         "mykrobe",
         "predict",
         "--species",
-        species,
+        str(species),
         "--sample",
         str(sample_name),
         "--seq",
@@ -27,7 +27,7 @@ def mykrobe_task(species: str, sample_name: str, reads: LatchFile, output_name: 
 
     ]
     subprocess.run(_mykrobe_cmd, check=True)
-    return LatchFile(str(Path("csv_file")), "latch:///out.csv")
+    return LatchFile(str(Path(csv_file)), "latch:///out.csv")
 
 
 @workflow
