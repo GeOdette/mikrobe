@@ -14,4 +14,4 @@ Input fastq files and click __launch workflow__ at the latch console<br>
 The output file will be named latch_mykrobe.json or latch_mykrobe.csv depending on your specifications
 
 ## Example output
-![image](/home/sgodette/Pictures/Screenshots/mtb.png)
+![mtb](https://user-images.githubusercontent.com/96872843/181252091-e461df90-d40c-4d1c-8f5b-d2f80326f49e.png)
